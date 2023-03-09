@@ -22,15 +22,22 @@ namespace WebApi.Endpoints
 
         public override async Task HandleAsync(GetDriversRequest req, CancellationToken ct)
         {
-            var response = await _driverService.GetDriversForLocation(req.Location, ct)!;
-
-            if(response is null || !response.Any())
+            try
             {
-                await SendNotFoundAsync(ct);
-                return;
+                var response = await _driverService.GetDriversForLocation(req.Location, ct)!;
+
+                if (response is null || !response.Any())
+                {
+                    await SendNotFoundAsync(ct);
+                    return;
+                }
+                await SendAsync(response!);
+            }
+            catch
+            {
+                await SendErrorsAsync();
             }
 
-            await SendAsync(response!);
         }
     }
 }

@@ -27,8 +27,6 @@ namespace Services
         public DriverDataService(IDistributedCache cache)
 		{
 			_cache = cache;
-
-			
 		}
 
 		public async Task<IEnumerable<Driver>?> GetDriversForLocation(string location, CancellationToken ct)

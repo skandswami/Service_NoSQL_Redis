@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using FastEndpoints.Swagger;
+using FastEndpoints.Security;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 _ = builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 _ = builder.Services.AddEndpointsApiExplorer();
-_ = builder.Services.AddAuthentication();
-_ = builder.Services.AddAuthorization();
 _ = builder.Services.AddFastEndpoints();
+// Token signing key comes ideally from the vault.
+_ = builder.Services.AddJWTBearerAuth("TokenSigningKeyTokenSigningKey");
 _ = builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerDoc(maxEndpointVersion: 1, tagIndex: 0, settings: x =>
 {
